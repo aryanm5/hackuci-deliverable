@@ -9,16 +9,25 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [quotes, setQuotes] = useState([]);
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
-        console.log(name + ': ' + message);
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('message', message);
+
+        const response = await axios.post('/api/quote', formData);
+
+        console.log(response.data);
+
+        setQuotes([...quotes, response.data]);
     };
 
-    const loadQuotes = async () => {
+    const loadQuotes = async max_age => {
         const response = await axios.get('/api/quotes', {
             params: {
-                max_age: -1
+                max_age
             }
         });
 
@@ -26,7 +35,7 @@ function App() {
         setLoading(false);
     };
 
-    useEffect(() => { loadQuotes(); }, []);
+    useEffect(() => { loadQuotes(-1); }, []);
 
     return (
         <div className="App">
