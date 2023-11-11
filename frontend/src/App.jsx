@@ -9,7 +9,7 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [quotes, setQuotes] = useState([]);
 
-    const handleSubmit = async e => {
+    const submitQuote = async e => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -19,12 +19,12 @@ function App() {
 
         const response = await axios.post('/api/quote', formData);
 
-        console.log(response.data);
-
         setQuotes([...quotes, response.data]);
     };
 
     const loadQuotes = async max_age => {
+        setLoading(true);
+
         const response = await axios.get('/api/quotes', {
             params: {
                 max_age
@@ -43,16 +43,26 @@ function App() {
             <h1>Hack @ UCI Tech Deliverable</h1>
 
             <h2>Submit a quote</h2>
-            {/* TODO: implement custom form submission logic to not refresh the page */}
-            <form action="/api/quote" method="post">
+            <form>
                 <label htmlFor="input-name">Name</label>
                 <input type="text" name="name" id="input-name" value={name} onChange={e => setName(e.target.value)} required />
                 <label htmlFor="input-message">Quote</label>
                 <input type="text" name="message" id="input-message" value={message} onChange={e => setMessage(e.target.value)} required />
-                <button type="submit" onClick={handleSubmit} disabled={name.length === 0 || message.length === 0}>Submit</button>
+                <button type="submit" onClick={submitQuote} disabled={name.length === 0 || message.length === 0}>Submit</button>
             </form>
 
             <h2>Previous Quotes</h2>
+
+            <select
+                defaultValue={-1}
+                onChange={e => loadQuotes(e.target.value)}
+            >
+                <option value={604800}>Past Week</option>
+                <option value={2630000}>Past Month</option>
+                <option value={31536000}>Past Year</option>
+                <option value={-1}>Show All</option>
+            </select>
+
             <div className="messages">
                 {
                     loading
