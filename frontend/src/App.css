@@ -1,0 +1,41 @@
+.App {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.Container {
+    text-align: center;
+    width: 50%;
+    background-color: #ffffff;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.QuoteContainer {
+    background-color: #dfdfdf;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.QuoteName {
+    float: left;
+}
+
+.QuoteDate {
+    float: right;
+}
+
+.QuoteMessage {
+    text-align: left;
+    margin-top: 10px;
+}
