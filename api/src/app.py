@@ -50,8 +50,12 @@ def post_message(name: str = Form(), message: str = Form()) -> Quote:
 @app.get("/quotes")
 def get_quotes(max_age: int) -> list[Quote]:
     """
-    Retrieve quotes based on max age in seconds
+    Retrieve quotes based on max age in seconds.
+    If max_age is negative, return all quotes.
     """
+
+    if max_age < 0:
+        return database["quotes"]
 
     now = datetime.now().replace(microsecond=0)
 
