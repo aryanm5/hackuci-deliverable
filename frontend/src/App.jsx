@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import axios from 'axios';
+import Quote from './Quote';
 
 function App() {
     const [name, setName] = useState("");
@@ -43,14 +44,11 @@ function App() {
             </form>
 
             <h2>Previous Quotes</h2>
-            {/* TODO: Display the actual quotes from the database */}
             <div className="messages">
                 {
                     loading
                         ? <p>Loading...</p>
-                        : quotes.map(quote => (
-                            <p>{quote.name}: {quote.message}</p>
-                        ))
+                        : quotes.map(quote => <Quote key={quote.time} quote={quote} />)
                 }
             </div>
         </div>
